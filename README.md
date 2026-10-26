@@ -4,7 +4,7 @@
 
 ---
 
-## ✨ What the project does
+##  What the project does
 - **Two FastAPI services**:
   - **Sandbox (port 8001)** – mocks vendor portals and FinanceHub APIs, including realistic failures (503, duplicate entries, etc.).
   - **Dashboard (port 8000)** – UI + REST API for task submission, live SSE trace, policy approvals, and verification.
@@ -18,7 +18,7 @@
 
 ---
 
-## 🚀 Quick start (local)
+##  Quick start (local)
 ### Prerequisites
 - **Python 3.13** (or 3.11/3.12) – ensure `python` points to a compatible interpreter.
 - **Git** – for version control.
@@ -73,7 +73,7 @@ It will execute the built‑in test suite and output a pass/fail summary.
 
 ---
 
-## 📦 Project structure
+##  Project structure
 ```
 OpsAgent/
 ├─ opsagent/                   # Core package
@@ -92,17 +92,17 @@ OpsAgent/
 
 ---
 
-## 🛠️ Extending the project
+##  Extending the project
 - **Add new tools** – create additional FastAPI endpoints in `opsagent/sandbox/server.py` and register them in the tool registry (`opsagent/runtime/tools.py`).
 - **Change policies** – edit `opsagent/policy/policy.yaml` (e.g., adjust `APPROVAL_THRESHOLD`).
 - **Swap LLM provider** – replace the Gemini client in `opsagent/runtime/agent.py` with any OpenAI‑compatible SDK.
 
 ---
 
-## 📜 License
+##  License
 This project is licensed under the MIT License.
 
 ---
 
-## 🙋‍♀️ Contact
+##  Contact
 For questions or contributions, open an issue on the GitHub repo or reach out to the author.
