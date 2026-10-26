@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="OpsAgent - AI Employee Dashboard for autonomous task management">
+    <title>OpsAgent — AI Employee Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <h1>OpsAgent</h1>
+                </div>
+                <span class="badge badge-live">AI Employee</span>
+            </div>
+            <div class="header-right">
+                <div class="status-indicator">
+                    <span class="pulse"></span>
+                    <span id="worker-status">System Active</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Task Submission -->
+            <section class="card task-submit-card">
+                <h2 class="card-title">
+                    <span class="icon">📋</span> New Task
+                </h2>
+                <div class="task-form">
+                    <textarea id="task-input" placeholder="Describe the task... e.g., 'Enter the latest invoice from Acme Supplies Pvt Ltd into FinanceHub'" rows="3"></textarea>
+                    <button id="submit-task" class="btn btn-primary">
+                        <span class="btn-icon">🚀</span> Submit Task
+                    </button>
+                </div>
+            </section>
+
+            <div class="grid-2">
+                <!-- Tasks List -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <span class="icon">📂</span> Tasks
+                        <button id="refresh-tasks" class="btn btn-ghost btn-sm">↻ Refresh</button>
+                    </h2>
+                    <div id="tasks-list" class="tasks-list">
+                        <div class="empty-state">No tasks yet. Submit one above!</div>
+                    </div>
+                </section>
+
+                <!-- Approvals -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <span class="icon">✋</span> Pending Approvals
+                        <button id="refresh-approvals" class="btn btn-ghost btn-sm">↻ Refresh</button>
+                    </h2>
+                    <div id="approvals-list" class="approvals-list">
+                        <div class="empty-state">No pending approvals</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Live Trace -->
+            <section class="card trace-card" id="trace-section" style="display:none;">
+                <h2 class="card-title">
+                    <span class="icon">🔍</span> Live Trace
+                    <span class="badge badge-streaming" id="trace-status">Streaming</span>
+                </h2>
+                <div id="trace-log" class="trace-log"></div>
+            </section>
+
+            <!-- Tabs for Evidence/Audit/Memory -->
+            <section class="card" id="details-section" style="display:none;">
+                <div class="tabs">
+                    <button class="tab active" data-tab="evidence">📸 Evidence & Report</button>
+                    <button class="tab" data-tab="audit">📝 Audit Log</button>
+                    <button class="tab" data-tab="memory">🧠 Memory</button>
+                    <button class="tab" data-tab="policy">🛡️ Policy</button>
+                </div>
+                <div id="tab-evidence" class="tab-content active">
+                    <div id="evidence-content" class="evidence-content">
+                        <div class="empty-state">Select a task to view evidence</div>
+                    </div>
+                </div>
+                <div id="tab-audit" class="tab-content">
+                    <div id="audit-content" class="audit-content">
+                        <div class="empty-state">Select a task to view audit log</div>
+                    </div>
+                </div>
+                <div id="tab-memory" class="tab-content">
+                    <div id="memory-content" class="memory-content">
+                        <div class="empty-state">Loading memory...</div>
+                    </div>
+                </div>
+                <div id="tab-policy" class="tab-content">
+                    <div id="policy-content" class="policy-content">
+                        <div class="empty-state">Loading policy...</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>OpsAgent v1.0 — Built with Google Antigravity · Gemini 2.5 Flash</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

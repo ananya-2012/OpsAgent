@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  opsagent:
+    build: .
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    env_file:
+      - .env
+    environment:
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      DEMO_MODE: "true"
+      SANDBOX_PORT: "8001"
+      DASHBOARD_PORT: "8000"
+      SANDBOX_BASE_URL: "http://localhost:8001"
+    volumes:
+      - opsagent-data:/app/data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  opsagent-data:

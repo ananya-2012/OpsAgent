@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: opsagent-dashboard
+    runtime: docker
+    plan: free
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DEMO_MODE
+        value: "false"
+      - key: SANDBOX_PORT
+        value: "8001"
+      - key: DASHBOARD_PORT
+        value: "8000"

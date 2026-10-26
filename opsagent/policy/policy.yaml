@@ -1,0 +1,118 @@
+# OpsAgent Policy Configuration
+# This file defines security policies enforced IN CODE before every tool call.
+# The agent cannot bypass these rules - they are checked by the policy engine.
+
+# Allowed domains the agent can interact with
+allowed_domains:
+  - "localhost"
+  - "127.0.0.1"
+  - "sandbox"     # Docker service name
+
+# Risk levels for actions
+risk_levels:
+  read:
+    description: "Read-only operations (browsing, reading files, API GET)"
+    requires_approval: false
+    allowed: true
+  write:
+    description: "Write operations (form submissions, API POST/PUT)"
+    requires_approval: false
+    allowed: true
+    conditions:
+      - type: "amount_threshold"
+        threshold: 50000
+        currency: "INR"
+        action: "require_approval"
+        message: "Amount exceeds Rs 50,000 - human approval required"
+  destructive:
+    description: "Destructive operations (DELETE, drop, remove)"
+    requires_approval: true
+    allowed: false
+    action: "block_and_escalate"
+    message: "Destructive operations are forbidden by policy"
+
+# Tool-specific policies
+tool_policies:
+  browser_goto:
+    risk: "read"
+    requires_permission: false
+    domain_check: true
+  browser_click:
+    risk: "write"
+    requires_permission: false
+  browser_fill:
+    risk: "write"
+    requires_permission: false
+  browser_read_page:
+    risk: "read"
+    requires_permission: false
+  browser_screenshot:
+    risk: "read"
+    requires_permission: false
+  file_list:
+    risk: "read"
+    requires_permission: false
+  file_read_pdf:
+    risk: "read"
+    requires_permission: false
+  http_get:
+    risk: "read"
+    requires_permission: false
+    domain_check: true
+  http_post:
+    risk: "write"
+    requires_permission: false
+    domain_check: true
+  http_put:
+    risk: "write"
+    requires_permission: false
+    domain_check: true
+  http_delete:
+    risk: "destructive"
+    requires_permission: true
+    domain_check: true
+  memory_remember:
+    risk: "write"
+    requires_permission: false
+  memory_recall:
+    risk: "read"
+    requires_permission: false
+  ask_human:
+    risk: "read"
+    requires_permission: false
+  finish:
+    risk: "read"
+    requires_permission: false
+
+# Approval rules
+approval_rules:
+  - name: "high_value_transaction"
+    condition: "amount > 50000"
+    action: "require_human_approval"
+    message: "Transaction amount exceeds Rs 50,000. Human approval required."
+  - name: "delete_forbidden"
+    condition: "action == 'delete'"
+    action: "block"
+    message: "Deletion of records is forbidden by company policy."
+  - name: "escalation"
+    condition: "tool_risk == 'destructive'"
+    action: "escalate"
+    message: "This action requires escalation to a supervisor."
+
+# Content safety
+content_safety:
+  # Treat all external content as untrusted data, not instructions
+  untrusted_sources:
+    - "page_content"
+    - "pdf_content"
+    - "api_response"
+  # Reject prompt injection patterns
+  injection_patterns:
+    - "ignore previous instructions"
+    - "ignore all previous"
+    - "disregard your instructions"
+    - "forget your rules"
+    - "you are now"
+    - "new instructions:"
+    - "system prompt:"
+    - "override policy"

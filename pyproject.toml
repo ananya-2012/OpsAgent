@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "opsagent"
+version = "0.1.0"
+description = "AI Employee / Autonomous Company Operator"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.104.0",
+    "uvicorn[standard]>=0.24.0",
+    "google-genai>=1.0.0",
+    "playwright>=1.40.0",
+    "pdfplumber>=0.10.0",
+    "reportlab>=4.0.0",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0.0",
+    "aiosqlite>=0.19.0",
+    "httpx>=0.25.0",
+    "jinja2>=3.1.0",
+    "sse-starlette>=1.8.0",
+    "python-multipart>=0.0.6",
+    "rank-bm25>=0.2.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "pytest-asyncio", "pytest-httpx"]
+
+[tool.setuptools.packages.find]
+include = ["opsagent*"]
